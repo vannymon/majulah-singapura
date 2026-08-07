@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Still to confirm: venue address (currently "TBA") in the hero pill and Logistics section.
+-->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Merdeka &amp; Masa: A National Day Feast</title>
+<meta name="description" content="A Mexican-Singaporean fusion feast for National Day: the menu, the story, and the journey behind it." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;0,900;1,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --sg-red: #ED2939;
+    --sg-red-deep: #B71C2B;
+    --sg-white: #FFFDF8;
+    --marigold: #F2A93B;
+    --chili: #E85D2C;
+    --cilantro: #3C7A4B;
+    --ink: #241413;
+    --paper: #FFF8ED;
+    --paper-alt: #FFF0DA;
+    --card: #FFFFFF;
+    --border: rgba(36, 20, 19, 0.12);
+    --shadow: 0 10px 30px rgba(36, 20, 19, 0.10);
+    --radius: 20px;
+    --max: 1080px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #F7EFE3;
+      --paper: #1B1210;
+      --paper-alt: #241715;
+      --card: #2A1B18;
+      --border: rgba(247, 239, 227, 0.12);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      --sg-white: #FFFDF8;
+    }
+  }
+
+  :root[data-theme="light"] {
+    --ink: #241413;
+    --paper: #FFF8ED;
+    --paper-alt: #FFF0DA;
+    --card: #FFFFFF;
+    --border: rgba(36, 20, 19, 0.12);
+    --shadow: 0 10px 30px rgba(36, 20, 19, 0.10);
+    --sg-white: #FFFDF8;
+  }
+
+  :root[data-theme="dark"] {
+    --ink: #F7EFE3;
+    --paper: #1B1210;
+    --paper-alt: #241715;
+    --card: #2A1B18;
+    --border: rgba(247, 239, 227, 0.12);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    --sg-white: #FFFDF8;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 900;
+    line-height: 1.08;
+    margin: 0 0 0.4em;
+  }
+
+  a { color: inherit; }
+
+  img { max-width: 100%; display: block; }
+
+  .wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  section { padding: clamp(3rem, 8vw, 6rem) 0; position: relative; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: var(--chili);
+    margin-bottom: 0.8rem;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 1.4em;
+    height: 2px;
+    background: var(--chili);
+    display: inline-block;
+  }
+
+  /* ---------- NAV ---------- */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
+  .brand .flag { margin-right: 0.35em; }
+
+  .nav-links {
+    display: flex;
+    gap: 0.35rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+
+  .nav-links a {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--ink);
+    padding: 0.5rem 0.8rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+  .nav-links a:hover { background: var(--paper-alt); }
+
+  .theme-toggle {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+  }
+  .theme-toggle:hover { transform: scale(1.07); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-top: clamp(3.5rem, 10vw, 6rem);
+    padding-bottom: clamp(3rem, 8vw, 5rem);
+    background:
+      radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--marigold) 30%, transparent), transparent 45%),
+      radial-gradient(circle at 85% 10%, color-mix(in srgb, var(--sg-red) 22%, transparent), transparent 50%),
+      var(--paper);
+    text-align: center;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 12% 20%, rgba(237,169,46,.18) 0 12px, transparent 13px),
+      radial-gradient(circle at 82% 68%, rgba(233,87,63,.16) 0 14px, transparent 15px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero canvas#fireworks {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero .wrap { position: relative; z-index: 2; }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 7vw, 4.6rem);
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--sg-red);
+  }
+
+  .hero-tagline {
+    max-width: 640px;
+    margin: 1rem auto 2rem;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    opacity: 0.85;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem 1rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .hero-meta span {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+  }
+
+  /* ---------- STORY ---------- */
+  .story {
+    background: var(--paper-alt);
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  @media (min-width: 800px) {
+    .story-grid { grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; }
+  }
+  .story h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
+  .story p { font-size: 1.05rem; margin-bottom: 1rem; }
+  .story p:last-child { margin-bottom: 0; }
+
+  .story-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.8rem;
+    border: 1px solid var(--border);
+  }
+  .story-card .flavor-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px dashed var(--border);
+    font-weight: 700;
+  }
+  .story-card .flavor-row:last-child { border-bottom: none; }
+  .story-card .flavor-row .icon { font-size: 1.4rem; }
+  .story-card .versus {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--chili);
+    font-weight: 700;
+    margin: 0.2rem 0;
+  }
+
+  /* ---------- MENUS ---------- */
+  .menus h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); text-align: center; }
+  .menus > .wrap > p.lede {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 2rem;
+    opacity: 0.85;
+    font-size: 1.05rem;
+  }
+
+  .menu-category { margin-bottom: 2.8rem; }
+  .menu-category:last-of-type { margin-bottom: 0; }
+
+  .menu-category-title {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--chili);
+    margin-bottom: 1.3rem;
+  }
+  .menu-category-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .dish-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+  @media (min-width: 640px) {
+    .dish-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .dish-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.3rem 1.4rem;
+    box-shadow: var(--shadow);
+  }
+  .dish-card .dish-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+  }
+  .dish-card h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  .dish-card p {
+    margin: 0;
+    font-size: 0.92rem;
+    opacity: 0.85;
+  }
+
+  .veg-tag {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--cilantro);
+    background: color-mix(in srgb, var(--cilantro) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--cilantro) 35%, transparent);
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .menus-note .veg-tag { vertical-align: middle; margin: 0 0.15em; }
+
+  .dietary-note {
+    text-align: center;
+    margin-top: 1.8rem;
+    font-size: 0.92rem;
+    opacity: 0.75;
+    font-style: italic;
+  }
+
+  /* ---------- JOURNEY ---------- */
+  .journey { background: var(--paper-alt); }
+  .journey h2 { text-align: center; font-size: clamp(1.9rem, 4vw, 2.8rem); }
+  .journey > .wrap > p.lede {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 3rem;
+    opacity: 0.85;
+    font-size: 1.05rem;
+  }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1.2rem;
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: 29px;
+    top: 60px;
+    bottom: -1.5rem;
+    width: 2px;
+    background: repeating-linear-gradient(to bottom, var(--chili) 0 6px, transparent 6px 12px);
+  }
+  .timeline-item:last-child::before { display: none; }
+
+  .timeline-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--marigold), var(--chili));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
+  }
+
+  .timeline-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.3rem 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .timeline-card .day-tag {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.75rem;
+    color: var(--chili);
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+  .timeline-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .timeline-card p { margin: 0; font-size: 0.97rem; opacity: 0.85; }
+
+  /* ---------- LOGISTICS ---------- */
+  .logistics-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  @media (min-width: 720px) {
+    .logistics-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .logistics h2 { text-align: center; font-size: clamp(1.9rem, 4vw, 2.8rem); margin-bottom: 2rem; }
+
+  .logi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .logi-card .logi-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+  .logi-card h4 { font-family: 'Fraunces', serif; margin-bottom: 0.3rem; }
+  .logi-card p { margin: 0; opacity: 0.85; font-size: 0.95rem; }
+
+  .map-placeholder {
+    margin-top: 1.5rem;
+    background: repeating-linear-gradient(45deg, var(--paper-alt), var(--paper-alt) 10px, var(--card) 10px, var(--card) 20px);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    opacity: 0.6;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  /* ---------- REVIEWS ---------- */
+  .reviews { background: var(--paper-alt); }
+  .reviews h2 { text-align: center; font-size: clamp(1.9rem, 4vw, 2.8rem); }
+  .reviews .lede {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 2rem;
+    opacity: 0.85;
+  }
+
+  .review-banner {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    min-height: 220px;
+  }
+
+  .review-card {
+    display: none;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--sg-red) 8%, var(--card)), var(--card));
+    border: 1px solid color-mix(in srgb, var(--sg-red) 30%, var(--border));
+    border-radius: 16px;
+    padding: 2rem 2.2rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .review-card.active {
+    display: block;
+    animation: reviewIn 0.5s ease;
+  }
+  @keyframes reviewIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .stars { color: var(--marigold); font-size: 1.1rem; letter-spacing: 0.15em; margin-bottom: 0.6rem; }
+  .review-card blockquote {
+    margin: 0 0 0.8rem;
+    font-style: italic;
+    font-size: 1.05rem;
+  }
+  .review-card cite {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .review-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.6rem;
+  }
+  .review-dots button {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .review-dots button.active {
+    width: 24px;
+    border-radius: 5px;
+    background: var(--sg-red);
+  }
+
+  .disclaimer {
+    max-width: 700px;
+    margin: 2.5rem auto 0;
+    text-align: center;
+    font-size: 0.82rem;
+    opacity: 0.65;
+    border-top: 1px solid var(--border);
+    padding-top: 1.2rem;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 3rem 1.25rem 2.5rem;
+  }
+  footer h3 { font-family: 'Fraunces', serif; font-size: 1.8rem; margin-bottom: 0.6rem; }
+  footer p { opacity: 0.8; margin: 0.3rem 0; }
+  footer .majulah {
+    margin-top: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--marigold);
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <div class="brand"><span class="flag">🇸🇬🌶️</span>Merdeka &amp; Masa</div>
+    <div class="nav-links">
+      <a href="#story">Our Story</a>
+      <a href="#menus">Menu</a>
+      <a href="#journey">The Journey</a>
+      <a href="#logistics">Logistics</a>
+      <a href="#reviews">Reviews</a>
+    </div>
+    <button id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode" title="Switch theme">🌙</button>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h1>Merdeka &amp; <em>Masa</em>:<br>A National Day Feast</h1>
+    <p class="hero-tagline">Ah Ma's rempah meets Abuela's birria. One night, two heritages, one long table.</p>
+    <div class="hero-meta">
+      <span>📅 9 August 2026</span>
+      <span>🕕 4pm onwards</span>
+      <span>📍 Wen Qi &amp; Zi Hang's crib (address TBA)</span>
+      <span>👩‍🍳 Chefs Elvin &amp; Vanessa</span>
+    </div>
+  </div>
+</header>
+
+<!-- ========== OUR STORY ========== -->
+<section id="story" class="story">
+  <div class="wrap story-grid">
+    <div>
+      <span class="eyebrow">Our Story</span>
+      <h2>Two spice routes, one ambitious weekend.</h2>
+      <p>Centuries ago, ships carrying chilli, galangal and turmeric reached a tiny port that became Singapore. Half a world away, corn, cacao and chilli were building an empire of their own in Mexico. Two spice routes that never officially met, until now.</p>
+      <p>This National Day, hawker-stall heritage meets taco-truck swagger in the same pot. One shared rempah base does double duty across both cuisines. It's a small tribute to a nation built by people who took what they were given and made it their own.</p>
+      <p>Come taste it, one birria-rendang quesataco at a time.</p>
+    </div>
+    <div class="story-card">
+      <div class="flavor-row"><span class="icon">🌶️</span> Rempah &amp; rendang, the Nusantara way</div>
+      <div class="versus">meets</div>
+      <div class="flavor-row"><span class="icon">🌮</span> Birria &amp; quesatacos, the Jalisco way</div>
+      <div class="versus">equals</div>
+      <div class="flavor-row"><span class="icon">🎆</span> One fusion feast</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MENUS ========== -->
+<section id="menus" class="menus">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center; display:flex;">The Menu</span>
+    <h2>Eight dishes, one table.</h2>
+    <p class="lede menus-note">One menu for everyone. Dishes marked <span class="veg-tag">🌱 Vegetarian</span> have no meat, but anyone is welcome to eat them.</p>
+
+    <div class="menu-category">
+      <h3 class="menu-category-title">Starters &amp; Grazing</h3>
+      <div class="dish-grid">
+        <div class="dish-card">
+          <div class="dish-head"><h4>Nachos, Pickled Green Chilli Salsa &amp; Guac</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Tortilla chips served alongside chunky guac and a salsa built on Mum's pickled green chillies. Salt, acid and heat in one spoonful.</p>
+        </div>
+        <div class="dish-card">
+          <div class="dish-head"><h4>Grilled Corn, Cheese &amp; Sambal</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Charred corn, sambal butter, a roll in Parmigiano, a squeeze of calamansi. Elote, Singapore style.</p>
+        </div>
+        <div class="dish-card">
+          <div class="dish-head"><h4>Green &amp; Gold Kiwi with Cheese</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Firm kiwi, Parmigiano curls, chilli and calamansi. Bright, unexpected, cut fresh to order.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <h3 class="menu-category-title">Tacos &amp; Quesadillas</h3>
+      <div class="dish-grid">
+        <div class="dish-card">
+          <div class="dish-head"><h4>Tempeh Birria Quesatacos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Tempeh braised in a shiitake and taucheo consommé, dipped in its own spiced oil and griddled crisp with melty Jack. Served with the broth for dunking.</p>
+        </div>
+        <div class="dish-card">
+          <div class="dish-head"><h4>Beef Rendang Quesatacos</h4></div>
+          <p>24-hour sous-vide chuck, pull-apart soft, folded through a dark rendang and finished with Parmigiano.</p>
+        </div>
+        <div class="dish-card">
+          <div class="dish-head"><h4>Mixed Mushroom Rendang Quesatacos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>The vegetarian parallel to the beef: same paste, same kerisik, same richness, with mushrooms crisped for texture.</p>
+        </div>
+        <div class="dish-card">
+          <div class="dish-head"><h4>Lamb Sup Kambing Birria Quesatacos</h4></div>
+          <p>24-hour sous-vide lamb, shredded into a warm-spiced consommé, dipped in its own fat and griddled crisp with Jack.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <h3 class="menu-category-title">Dessert</h3>
+      <div class="dish-grid">
+        <div class="dish-card">
+          <div class="dish-head"><h4>Kaya Churros</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Fried to order, tossed in cinnamon sugar, dunked in warm kaya. Singapore meets Mexico in one bite.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-category">
+      <h3 class="menu-category-title">Toppings, for everything</h3>
+      <div class="dish-grid">
+        <div class="dish-card">
+          <div class="dish-head"><h4>Achar</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Pickled cucumber, carrot, pineapple and long bean with toasted peanuts and sesame. The most useful thing on the table.</p>
+        </div>
+        <div class="dish-card">
+          <div class="dish-head"><h4>Cucumber-Mint-Calamansi Relish</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Bright and cooling. The best all-rounder against the rich braises.</p>
+        </div>
+        <div class="dish-card">
+          <div class="dish-head"><h4>Pickled Red Onions</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Sharp, clean acid, tucked into every birria taco.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="dietary-note">Dietary notes welcome. Let us know and we'll sort you out. 🙏</p>
+  </div>
+</section>
+
+<!-- ========== JOURNEY OF THE FEAST ========== -->
+<section id="journey" class="journey">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center; display:flex;">Behind The Scenes</span>
+    <h2>The Journey of the Feast</h2>
+    <p class="lede">Three days, one very full fridge, one moment of quiet panic. Here's the saga.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-icon" aria-hidden="true">🌙</div>
+        <div class="timeline-card">
+          <span class="day-tag">Friday Night</span>
+          <h3>The Marinade Begins</h3>
+          <p>The beef and lamb are seasoned and sealed. Lamb gets a rub of birria spice, beef stays clean for its rendang destiny. The feast begins quietly.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-icon" aria-hidden="true">🔥</div>
+        <div class="timeline-card">
+          <span class="day-tag">Saturday</span>
+          <h3>The Big Blend</h3>
+          <p>One shared spice base splits three ways into achar, sambal and the birria foundation. Both proteins go into a slow 24-hour bath. Both rendang sauces come together. Two consommés are born.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-icon" aria-hidden="true">🎉</div>
+        <div class="timeline-card">
+          <span class="day-tag">Sunday</span>
+          <h3>The Big Reveal</h3>
+          <p>The proteins come out of their long bath, rest, then get shredded into the lamb consommé with every drop of bag juice. Everything is packed cold and driven to the party.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LOGISTICS ========== -->
+<section id="logistics" class="logistics">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center; display:flex;">The Details</span>
+    <h2>Logistics</h2>
+    <div class="logistics-grid">
+      <div class="logi-card">
+        <div class="logi-icon">📅</div>
+        <h4>When</h4>
+        <p>9 August 2026<br>4pm onwards</p>
+      </div>
+      <div class="logi-card">
+        <div class="logi-icon">📍</div>
+        <h4>Where</h4>
+        <p>Wen Qi &amp; Zi Hang's crib<br>Address TBA</p>
+      </div>
+      <div class="logi-card">
+        <div class="logi-icon">🎒</div>
+        <h4>Bring</h4>
+        <p>Just your appetite. Containers for leftovers, if you're smart about it.</p>
+      </div>
+    </div>
+
+    <div class="map-placeholder"><!-- REPLACE WITH MAP EMBED OR PHOTO -->Map / venue photo goes here</div>
+  </div>
+</section>
+
+<!-- ========== REVIEWS ========== -->
+<section id="reviews" class="reviews">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center; display:flex;">Word On The Street</span>
+    <h2>Five-Star Reviews</h2>
+    <p class="lede">Entirely fictional. Extremely flattering.</p>
+
+    <div class="review-banner">
+      <div class="review-card active">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Efficient use of resources, exceptional integration of imported and local flavours, and a queue management system that would make our hawker centres proud. This is nation-building through braising liquid."</blockquote>
+        <cite>Lee Kuan Yew, Founding Prime Minister of Singapore</cite>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I have seen this island grow from a fishing village to a global port, and now, apparently, a taco stand. Approved."</blockquote>
+        <cite>Sir Stamford Raffles</cite>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The consommé alone justifies a National Day Award. I would know, I've handed out a few."</blockquote>
+        <cite>S. R. Nathan, Former President of Singapore</cite>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Multiracial, multicultural, multi-delicious. This is the Singapore story, plated."</blockquote>
+        <cite>Goh Chok Tong, Former Prime Minister of Singapore</cite>
+      </div>
+    </div>
+    <div class="review-dots" role="tablist" aria-label="Choose a review">
+      <button class="active" data-index="0" aria-label="Review 1" type="button"></button>
+      <button data-index="1" aria-label="Review 2" type="button"></button>
+      <button data-index="2" aria-label="Review 3" type="button"></button>
+      <button data-index="3" aria-label="Review 4" type="button"></button>
+    </div>
+
+    <p class="disclaimer">All quotes are fictional, written purely for entertainment. No endorsement, real or implied, should be inferred from any historical figure named here.</p>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <h3>See you there.</h3>
+  <p>Cooked with love (and a lot of chilli) by Chefs Elvin &amp; Vanessa</p>
+  <p>Hosted at Wen Qi &amp; Zi Hang's crib</p>
+  <p class="majulah">Majulah Singapura! 🎆</p>
+</footer>
+
+<script>
+  // ---- reviews banner ----
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.review-card'));
+    var dots = Array.prototype.slice.call(document.querySelectorAll('.review-dots button'));
+    var banner = document.querySelector('.review-banner');
+    if (!slides.length) return;
+
+    var current = 0;
+    var timer = null;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(index) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = index;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function next() {
+      show((current + 1) % slides.length);
+    }
+
+    function start() {
+      if (reduceMotion) return;
+      stop();
+      timer = setInterval(next, 5000);
+    }
+
+    function stop() {
+      if (timer) clearInterval(timer);
+    }
+
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () {
+        show(i);
+        start();
+      });
+    });
+
+    banner.addEventListener('mouseenter', stop);
+    banner.addEventListener('mouseleave', start);
+    banner.addEventListener('focusin', stop);
+    banner.addEventListener('focusout', start);
+
+    start();
+  })();
+
+  // ---- theme toggle ----
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var saved = localStorage.getItem('theme');
+    if (saved) root.setAttribute('data-theme', saved);
+
+    function effectiveTheme() {
+      var attr = root.getAttribute('data-theme');
+      if (attr) return attr;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function updateIcon() {
+      var isDark = effectiveTheme() === 'dark';
+      btn.textContent = isDark ? '☀️' : '🌙';
+      btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+
+    btn.addEventListener('click', function () {
+      var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon();
+    });
+
+    updateIcon();
+  })();
+
+  // ---- header fireworks ----
+  (function () {
+    var canvas = document.getElementById('fireworks');
+    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var ctx = canvas.getContext('2d');
+    var hero = canvas.parentElement;
+    var rockets = [];
+    var particles = [];
+    var colors = ['#ED2939', '#F2A93B', '#E85D2C', '#FFFDF8', '#3C7A4B'];
+
+    function resize() {
+      canvas.width = hero.clientWidth;
+      canvas.height = hero.clientHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function launchRocket() {
+      var x = canvas.width * (0.12 + Math.random() * 0.76);
+      rockets.push({
+        x: x,
+        y: canvas.height,
+        targetY: canvas.height * (0.18 + Math.random() * 0.35),
+        speed: 1.1 + Math.random() * 0.6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        trail: []
+      });
+    }
+
+    function explode(rocket) {
+      var count = 30 + Math.floor(Math.random() * 20);
+      for (var i = 0; i < count; i++) {
+        var angle = (Math.PI * 2 * i) / count + Math.random() * 0.2;
+        var speed = 0.6 + Math.random() * 1.6;
+        particles.push({
+          x: rocket.x, y: rocket.y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1,
+          decay: 0.006 + Math.random() * 0.008,
+          color: rocket.color,
+          size: 1.2 + Math.random() * 1.3
+        });
+      }
+    }
+
+    function scheduleLaunches() {
+      var delay = 2200 + Math.random() * 2600;
+      setTimeout(function () {
+        launchRocket();
+        if (Math.random() < 0.4) {
+          setTimeout(launchRocket, 150 + Math.random() * 300);
+        }
+        scheduleLaunches();
+      }, delay);
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      rockets.forEach(function (r) {
+        r.trail.push({ x: r.x, y: r.y });
+        if (r.trail.length > 6) r.trail.shift();
+        r.y -= r.speed;
+      });
+      rockets = rockets.filter(function (r) {
+        if (r.y <= r.targetY) {
+          explode(r);
+          return false;
+        }
+        return true;
+      });
+
+      rockets.forEach(function (r) {
+        r.trail.forEach(function (pt, i) {
+          ctx.globalAlpha = (i + 1) / r.trail.length * 0.5;
+          ctx.fillStyle = r.color;
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 1.4, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 0.9;
+        ctx.fillStyle = r.color;
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, 1.8, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      particles.forEach(function (p) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.012;
+        p.life -= p.decay;
+      });
+      particles = particles.filter(function (p) { return p.life > 0; });
+      particles.forEach(function (p) {
+        ctx.globalAlpha = Math.max(p.life, 0);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(tick);
+    }
+
+    launchRocket();
+    scheduleLaunches();
+    tick();
+  })();
+</script>
+
+</body>
+</html>
