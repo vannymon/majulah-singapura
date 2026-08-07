@@ -317,39 +317,34 @@
     background: var(--border);
   }
 
-  .dish-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.1rem;
-  }
-  @media (min-width: 640px) {
-    .dish-grid { grid-template-columns: 1fr 1fr; }
+  .dish-list {
+    max-width: 760px;
+    margin: 0 auto;
   }
 
-  .dish-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.3rem 1.4rem;
-    box-shadow: var(--shadow);
+  .dish-row {
+    padding: 1.1rem 0;
+    border-bottom: 1px dashed var(--border);
   }
-  .dish-card .dish-head {
+  .dish-row:last-child { border-bottom: none; }
+  .dish-row .dish-head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 0.6rem;
     margin-bottom: 0.35rem;
   }
-  .dish-card h4 {
+  .dish-row h4 {
     font-family: 'Fraunces', serif;
     font-weight: 700;
     font-size: 1.1rem;
     margin: 0;
   }
-  .dish-card p {
+  .dish-row p {
     margin: 0;
     font-size: 0.92rem;
-    opacity: 0.85;
+    opacity: 0.8;
+    max-width: 62ch;
   }
 
   .veg-tag {
@@ -430,11 +425,7 @@
   }
 
   .timeline-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.3rem 1.5rem;
-    box-shadow: var(--shadow);
+    padding-top: 0.4rem;
   }
   .timeline-card .day-tag {
     font-weight: 800;
@@ -450,26 +441,31 @@
 
   /* ---------- LOGISTICS ---------- */
   .logistics-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    max-width: 640px;
+    margin: 0 auto;
   }
   @media (min-width: 720px) {
-    .logistics-grid { grid-template-columns: repeat(3, 1fr); }
+    .logistics-grid {
+      flex-direction: row;
+      justify-content: space-between;
+      max-width: 820px;
+      gap: 0;
+    }
+    .logi-card {
+      flex: 1;
+      padding: 0 1.6rem;
+    }
+    .logi-card:not(:first-child) { border-left: 1px dashed var(--border); }
   }
   .logistics h2 { text-align: center; font-size: clamp(1.9rem, 4vw, 2.8rem); margin-bottom: 2rem; }
 
-  .logi-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.6rem;
-    text-align: center;
-    box-shadow: var(--shadow);
-  }
-  .logi-card .logi-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+  .logi-card { text-align: center; }
+  .logi-card .logi-icon { font-size: 1.8rem; margin-bottom: 0.6rem; display: block; }
   .logi-card h4 { font-family: 'Fraunces', serif; margin-bottom: 0.3rem; }
-  .logi-card p { margin: 0; opacity: 0.85; font-size: 0.95rem; }
+  .logi-card p { margin: 0; opacity: 0.8; font-size: 0.95rem; }
 
   .map-placeholder {
     margin-top: 1.5rem;
@@ -496,64 +492,95 @@
     opacity: 0.85;
   }
 
-  .review-banner {
-    position: relative;
-    max-width: 700px;
-    margin: 0 auto;
-    min-height: 220px;
+  .reviews-marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    padding: 0.5rem 0 1rem;
   }
 
-  .review-card {
-    display: none;
-    background: linear-gradient(135deg, color-mix(in srgb, var(--sg-red) 8%, var(--card)), var(--card));
-    border: 1px solid color-mix(in srgb, var(--sg-red) 30%, var(--border));
-    border-radius: 16px;
-    padding: 2rem 2.2rem;
-    box-shadow: var(--shadow);
-    text-align: center;
-  }
-  .review-card.active {
-    display: block;
-    animation: reviewIn 0.5s ease;
-  }
-  @keyframes reviewIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .stars { color: var(--marigold); font-size: 1.1rem; letter-spacing: 0.15em; margin-bottom: 0.6rem; }
-  .review-card blockquote {
-    margin: 0 0 0.8rem;
-    font-style: italic;
-    font-size: 1.05rem;
-  }
-  .review-card cite {
-    font-style: normal;
-    font-weight: 800;
-    font-size: 0.9rem;
-    opacity: 0.8;
-  }
-
-  .review-dots {
+  .marquee-track {
     display: flex;
-    justify-content: center;
-    gap: 0.5rem;
+    gap: 1.4rem;
+    width: max-content;
+    animation: marqueeMove 34s linear infinite;
+  }
+  .reviews-marquee:hover .marquee-track,
+  .reviews-marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marqueeMove {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .bubble {
+    flex: 0 0 auto;
+    width: min(310px, 78vw);
+    padding-bottom: 2.6rem;
+  }
+
+  .bubble-body {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.4rem 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .bubble.featured .bubble-body {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--sg-red) 10%, var(--card)), var(--card));
+    border-color: color-mix(in srgb, var(--sg-red) 35%, var(--border));
+  }
+  .bubble-body::after {
+    content: "";
+    position: absolute;
+    left: 30px;
+    bottom: -9px;
+    width: 18px;
+    height: 18px;
+    background: inherit;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    border-radius: 0 0 4px 0;
+    transform: rotate(45deg);
+  }
+
+  .stars { color: var(--marigold); font-size: 0.95rem; letter-spacing: 0.14em; margin-bottom: 0.6rem; }
+  .bubble-body p {
+    margin: 0;
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .bubble-author {
     margin-top: 1.6rem;
+    margin-left: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-weight: 800;
+    font-size: 0.83rem;
+    opacity: 0.85;
   }
-  .review-dots button {
-    width: 9px;
-    height: 9px;
+  .bubble-author .avatar {
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    border: none;
-    padding: 0;
-    background: var(--border);
-    cursor: pointer;
-    transition: all 0.2s ease;
+    background: var(--paper-alt);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
   }
-  .review-dots button.active {
-    width: 24px;
-    border-radius: 5px;
-    background: var(--sg-red);
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+    .reviews-marquee { overflow-x: auto; }
   }
 
   .disclaimer {
@@ -643,16 +670,16 @@
 
     <div class="menu-category">
       <h3 class="menu-category-title">Starters &amp; Grazing</h3>
-      <div class="dish-grid">
-        <div class="dish-card">
+      <div class="dish-list">
+        <div class="dish-row">
           <div class="dish-head"><h4>Nachos, Pickled Green Chilli Salsa &amp; Guac</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Tortilla chips served alongside chunky guac and a salsa built on Mum's pickled green chillies. Salt, acid and heat in one spoonful.</p>
         </div>
-        <div class="dish-card">
+        <div class="dish-row">
           <div class="dish-head"><h4>Grilled Corn, Cheese &amp; Sambal</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Charred corn, sambal butter, a roll in Parmigiano, a squeeze of calamansi. Elote, Singapore style.</p>
         </div>
-        <div class="dish-card">
+        <div class="dish-row">
           <div class="dish-head"><h4>Green &amp; Gold Kiwi with Cheese</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Firm kiwi, Parmigiano curls, chilli and calamansi. Bright, unexpected, cut fresh to order.</p>
         </div>
@@ -661,20 +688,20 @@
 
     <div class="menu-category">
       <h3 class="menu-category-title">Tacos &amp; Quesadillas</h3>
-      <div class="dish-grid">
-        <div class="dish-card">
+      <div class="dish-list">
+        <div class="dish-row">
           <div class="dish-head"><h4>Tempeh Birria Quesatacos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Tempeh braised in a shiitake and taucheo consommé, dipped in its own spiced oil and griddled crisp with melty Jack. Served with the broth for dunking.</p>
         </div>
-        <div class="dish-card">
+        <div class="dish-row">
           <div class="dish-head"><h4>Beef Rendang Quesatacos</h4></div>
           <p>24-hour sous-vide chuck, pull-apart soft, folded through a dark rendang and finished with Parmigiano.</p>
         </div>
-        <div class="dish-card">
+        <div class="dish-row">
           <div class="dish-head"><h4>Mixed Mushroom Rendang Quesatacos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>The vegetarian parallel to the beef: same paste, same kerisik, same richness, with mushrooms crisped for texture.</p>
         </div>
-        <div class="dish-card">
+        <div class="dish-row">
           <div class="dish-head"><h4>Lamb Sup Kambing Birria Quesatacos</h4></div>
           <p>24-hour sous-vide lamb, shredded into a warm-spiced consommé, dipped in its own fat and griddled crisp with Jack.</p>
         </div>
@@ -683,8 +710,8 @@
 
     <div class="menu-category">
       <h3 class="menu-category-title">Dessert</h3>
-      <div class="dish-grid">
-        <div class="dish-card">
+      <div class="dish-list">
+        <div class="dish-row">
           <div class="dish-head"><h4>Kaya Churros</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Fried to order, tossed in cinnamon sugar, dunked in warm kaya. Singapore meets Mexico in one bite.</p>
         </div>
@@ -693,16 +720,16 @@
 
     <div class="menu-category">
       <h3 class="menu-category-title">Toppings, for everything</h3>
-      <div class="dish-grid">
-        <div class="dish-card">
+      <div class="dish-list">
+        <div class="dish-row">
           <div class="dish-head"><h4>Achar</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Pickled cucumber, carrot, pineapple and long bean with toasted peanuts and sesame. The most useful thing on the table.</p>
         </div>
-        <div class="dish-card">
+        <div class="dish-row">
           <div class="dish-head"><h4>Cucumber-Mint-Calamansi Relish</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Bright and cooling. The best all-rounder against the rich braises.</p>
         </div>
-        <div class="dish-card">
+        <div class="dish-row">
           <div class="dish-head"><h4>Pickled Red Onions</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Sharp, clean acid, tucked into every birria taco.</p>
         </div>
@@ -781,35 +808,67 @@
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center; display:flex;">Word On The Street</span>
     <h2>Five-Star Reviews</h2>
-    <p class="lede">Entirely fictional. Extremely flattering.</p>
+    <p class="lede">Entirely fictional. Five stars, same as our flag.</p>
 
-    <div class="review-banner">
-      <div class="review-card active">
-        <div class="stars">★★★★★</div>
-        <blockquote>"Efficient use of resources, exceptional integration of imported and local flavours, and a queue management system that would make our hawker centres proud. This is nation-building through braising liquid."</blockquote>
-        <cite>Lee Kuan Yew, Founding Prime Minister of Singapore</cite>
+    <div class="reviews-marquee">
+      <div class="marquee-track">
+        <div class="bubble featured">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
+            <p>"Efficient use of resources, exceptional integration of imported and local flavours, and a queue management system that would make our hawker centres proud. This is nation-building through braising liquid."</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🇸🇬</span> Lee Kuan Yew, Founding Prime Minister of Singapore</div>
+        </div>
+        <div class="bubble">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
+            <p>"I have seen this island grow from a fishing village to a global port, and now, apparently, a taco stand. Approved."</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">⚓</span> Sir Stamford Raffles</div>
+        </div>
+        <div class="bubble">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
+            <p>"The consommé alone justifies a National Day Award. I would know, I've handed out a few."</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🎖️</span> S. R. Nathan, Former President of Singapore</div>
+        </div>
+        <div class="bubble">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
+            <p>"Multiracial, multicultural, multi-delicious. This is the Singapore story, plated."</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🤝</span> Goh Chok Tong, Former Prime Minister of Singapore</div>
+        </div>
+        <div class="bubble featured" aria-hidden="true">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
+            <p>"Efficient use of resources, exceptional integration of imported and local flavours, and a queue management system that would make our hawker centres proud. This is nation-building through braising liquid."</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🇸🇬</span> Lee Kuan Yew, Founding Prime Minister of Singapore</div>
+        </div>
+        <div class="bubble" aria-hidden="true">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
+            <p>"I have seen this island grow from a fishing village to a global port, and now, apparently, a taco stand. Approved."</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">⚓</span> Sir Stamford Raffles</div>
+        </div>
+        <div class="bubble" aria-hidden="true">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
+            <p>"The consommé alone justifies a National Day Award. I would know, I've handed out a few."</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🎖️</span> S. R. Nathan, Former President of Singapore</div>
+        </div>
+        <div class="bubble" aria-hidden="true">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
+            <p>"Multiracial, multicultural, multi-delicious. This is the Singapore story, plated."</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🤝</span> Goh Chok Tong, Former Prime Minister of Singapore</div>
+        </div>
       </div>
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <blockquote>"I have seen this island grow from a fishing village to a global port, and now, apparently, a taco stand. Approved."</blockquote>
-        <cite>Sir Stamford Raffles</cite>
-      </div>
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <blockquote>"The consommé alone justifies a National Day Award. I would know, I've handed out a few."</blockquote>
-        <cite>S. R. Nathan, Former President of Singapore</cite>
-      </div>
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <blockquote>"Multiracial, multicultural, multi-delicious. This is the Singapore story, plated."</blockquote>
-        <cite>Goh Chok Tong, Former Prime Minister of Singapore</cite>
-      </div>
-    </div>
-    <div class="review-dots" role="tablist" aria-label="Choose a review">
-      <button class="active" data-index="0" aria-label="Review 1" type="button"></button>
-      <button data-index="1" aria-label="Review 2" type="button"></button>
-      <button data-index="2" aria-label="Review 3" type="button"></button>
-      <button data-index="3" aria-label="Review 4" type="button"></button>
     </div>
 
     <p class="disclaimer">All quotes are fictional, written purely for entertainment. No endorsement, real or implied, should be inferred from any historical figure named here.</p>
@@ -825,54 +884,6 @@
 </footer>
 
 <script>
-  // ---- reviews banner ----
-  (function () {
-    var slides = Array.prototype.slice.call(document.querySelectorAll('.review-card'));
-    var dots = Array.prototype.slice.call(document.querySelectorAll('.review-dots button'));
-    var banner = document.querySelector('.review-banner');
-    if (!slides.length) return;
-
-    var current = 0;
-    var timer = null;
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function show(index) {
-      slides[current].classList.remove('active');
-      dots[current].classList.remove('active');
-      current = index;
-      slides[current].classList.add('active');
-      dots[current].classList.add('active');
-    }
-
-    function next() {
-      show((current + 1) % slides.length);
-    }
-
-    function start() {
-      if (reduceMotion) return;
-      stop();
-      timer = setInterval(next, 5000);
-    }
-
-    function stop() {
-      if (timer) clearInterval(timer);
-    }
-
-    dots.forEach(function (dot, i) {
-      dot.addEventListener('click', function () {
-        show(i);
-        start();
-      });
-    });
-
-    banner.addEventListener('mouseenter', stop);
-    banner.addEventListener('mouseleave', start);
-    banner.addEventListener('focusin', stop);
-    banner.addEventListener('focusout', start);
-
-    start();
-  })();
-
   // ---- theme toggle ----
   (function () {
     var root = document.documentElement;
@@ -905,28 +916,40 @@
   // ---- header fireworks ----
   (function () {
     var canvas = document.getElementById('fireworks');
-    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!canvas) return;
 
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var ctx = canvas.getContext('2d');
     var hero = canvas.parentElement;
     var rockets = [];
     var particles = [];
     var colors = ['#ED2939', '#F2A93B', '#E85D2C', '#FFFDF8', '#3C7A4B'];
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = 0, h = 0;
 
     function resize() {
-      canvas.width = hero.clientWidth;
-      canvas.height = hero.clientHeight;
+      w = hero.clientWidth;
+      h = hero.clientHeight;
+      if (!w || !h) return;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
     resize();
     window.addEventListener('resize', resize);
+    window.addEventListener('orientationchange', function () { setTimeout(resize, 250); });
+    window.addEventListener('load', resize);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+    setTimeout(resize, 400);
 
     function launchRocket() {
-      var x = canvas.width * (0.12 + Math.random() * 0.76);
+      if (!w || !h) return;
+      var x = w * (0.12 + Math.random() * 0.76);
       rockets.push({
         x: x,
-        y: canvas.height,
-        targetY: canvas.height * (0.18 + Math.random() * 0.35),
-        speed: 1.1 + Math.random() * 0.6,
+        y: h,
+        targetY: h * (0.18 + Math.random() * 0.35),
+        speed: 1.3 + Math.random() * 0.7,
         color: colors[Math.floor(Math.random() * colors.length)],
         trail: []
       });
@@ -936,7 +959,7 @@
       var count = 30 + Math.floor(Math.random() * 20);
       for (var i = 0; i < count; i++) {
         var angle = (Math.PI * 2 * i) / count + Math.random() * 0.2;
-        var speed = 0.6 + Math.random() * 1.6;
+        var speed = 0.7 + Math.random() * 1.8;
         particles.push({
           x: rocket.x, y: rocket.y,
           vx: Math.cos(angle) * speed,
@@ -944,7 +967,7 @@
           life: 1,
           decay: 0.006 + Math.random() * 0.008,
           color: rocket.color,
-          size: 1.2 + Math.random() * 1.3
+          size: 2 + Math.random() * 1.6
         });
       }
     }
@@ -960,44 +983,24 @@
       }, delay);
     }
 
-    function tick() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      rockets.forEach(function (r) {
-        r.trail.push({ x: r.x, y: r.y });
-        if (r.trail.length > 6) r.trail.shift();
-        r.y -= r.speed;
-      });
-      rockets = rockets.filter(function (r) {
-        if (r.y <= r.targetY) {
-          explode(r);
-          return false;
-        }
-        return true;
-      });
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
 
       rockets.forEach(function (r) {
         r.trail.forEach(function (pt, i) {
           ctx.globalAlpha = (i + 1) / r.trail.length * 0.5;
           ctx.fillStyle = r.color;
           ctx.beginPath();
-          ctx.arc(pt.x, pt.y, 1.4, 0, Math.PI * 2);
+          ctx.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
           ctx.fill();
         });
         ctx.globalAlpha = 0.9;
         ctx.fillStyle = r.color;
         ctx.beginPath();
-        ctx.arc(r.x, r.y, 1.8, 0, Math.PI * 2);
+        ctx.arc(r.x, r.y, 2.6, 0, Math.PI * 2);
         ctx.fill();
       });
 
-      particles.forEach(function (p) {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.012;
-        p.life -= p.decay;
-      });
-      particles = particles.filter(function (p) { return p.life > 0; });
       particles.forEach(function (p) {
         ctx.globalAlpha = Math.max(p.life, 0);
         ctx.fillStyle = p.color;
@@ -1007,11 +1010,45 @@
       });
 
       ctx.globalAlpha = 1;
+    }
+
+    function tick() {
+      if (w && h) {
+        rockets.forEach(function (r) {
+          r.trail.push({ x: r.x, y: r.y });
+          if (r.trail.length > 6) r.trail.shift();
+          r.y -= r.speed;
+        });
+        rockets = rockets.filter(function (r) {
+          if (r.y <= r.targetY) {
+            explode(r);
+            return false;
+          }
+          return true;
+        });
+
+        particles.forEach(function (p) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.012;
+          p.life -= p.decay;
+        });
+        particles = particles.filter(function (p) { return p.life > 0; });
+
+        draw();
+      }
+      if (reduceMotion && rockets.length === 0 && particles.length === 0 && burstDone) return;
       requestAnimationFrame(tick);
     }
 
-    launchRocket();
-    scheduleLaunches();
+    var burstDone = false;
+    if (reduceMotion) {
+      // still show a single gentle burst instead of nothing, then stop
+      setTimeout(function () { launchRocket(); burstDone = true; }, 500);
+    } else {
+      launchRocket();
+      scheduleLaunches();
+    }
     tick();
   })();
 </script>
