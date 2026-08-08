@@ -161,23 +161,55 @@
   }
   .nav-links a:hover { background: var(--paper-alt); }
 
-  .theme-toggle {
-    flex-shrink: 0;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--ink);
-    font-size: 1rem;
-    line-height: 1;
-    cursor: pointer;
+  .nav-actions {
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: transform 0.15s ease;
+    gap: 0.6rem;
+    flex-shrink: 0;
   }
-  .theme-toggle:hover { transform: scale(1.07); }
+
+  .theme-toggle {
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .theme-toggle-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 56px;
+    height: 30px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    padding: 0 6px;
+    box-sizing: border-box;
+  }
+  .theme-toggle-icon {
+    font-size: 0.8rem;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    opacity: 0.75;
+  }
+  .theme-toggle-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--sg-white);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: transform 0.25s ease;
+  }
+  .theme-toggle[aria-checked="true"] .theme-toggle-knob {
+    transform: translateX(28px);
+  }
 
   .nav-toggle {
     display: none;
@@ -652,11 +684,6 @@
     flex-shrink: 0;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .marquee-track { animation: none; }
-    .reviews-marquee { overflow-x: auto; }
-  }
-
   .disclaimer {
     max-width: 700px;
     margin: 2.5rem auto 0;
@@ -697,8 +724,16 @@
       <!-- <a href="#logistics">Logistics</a> -->
       <a href="#reviews">Reviews</a>
     </div>
-    <button id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode" title="Switch theme">🌙</button>
-    <button id="navToggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false" type="button">☰</button>
+    <div class="nav-actions">
+      <button id="themeToggle" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode" title="Switch theme" type="button">
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon">☀️</span>
+          <span class="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-knob"></span>
+        </span>
+      </button>
+      <button id="navToggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false" type="button">☰</button>
+    </div>
   </div>
 </nav>
 
@@ -726,11 +761,11 @@
 
     <div class="merge-circles" id="mergeCircles">
       <div class="circle circle-sg">
-        <span class="circle-icon">🌶️</span>
+        <span class="circle-icon">🌶️🇸🇬</span>
         Rempah &amp; rendang
       </div>
       <div class="circle circle-mx">
-        <span class="circle-icon">🌮</span>
+        <span class="circle-icon">🌮🇲🇽</span>
         Birria &amp; quesatacos
       </div>
       <div class="intersection-mask" id="intersectionMask">
@@ -970,7 +1005,7 @@
 
     function updateIcon() {
       var isDark = effectiveTheme() === 'dark';
-      btn.textContent = isDark ? '☀️' : '🌙';
+      btn.setAttribute('aria-checked', String(isDark));
       btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
     }
 
