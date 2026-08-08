@@ -297,7 +297,6 @@
     max-width: 420px;
     height: clamp(120px, 38vw, 160px);
     margin: 3rem auto 0;
-    cursor: pointer;
   }
   .circle {
     position: absolute;
@@ -305,60 +304,62 @@
     width: clamp(120px, 38vw, 160px);
     height: clamp(120px, 38vw, 160px);
     border-radius: 50%;
+    background: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: var(--sg-white);
     font-weight: 700;
     font-size: 0.78rem;
     line-height: 1.3;
     padding: 0.8rem;
-    box-shadow: var(--shadow);
-    transition: transform 1.1s cubic-bezier(.22, 1, .36, 1);
+    box-sizing: border-box;
   }
   .circle-icon { font-size: 1.7rem; margin-bottom: 0.3rem; display: block; }
   .circle-sg {
     left: 0;
-    background: linear-gradient(135deg, var(--chili), var(--marigold));
+    border: 2px solid var(--chili);
+    color: var(--chili);
   }
   .circle-mx {
-    right: 0;
-    background: linear-gradient(135deg, var(--sg-red), var(--cilantro));
+    left: 0;
+    border: 2px solid var(--sg-red);
+    color: var(--sg-red);
   }
-  .merge-circles.merged .circle-sg { transform: translateX(50px); }
-  .merge-circles.merged .circle-mx { transform: translateX(-50px); }
+
+  .intersection-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: clamp(120px, 38vw, 160px);
+    height: clamp(120px, 38vw, 160px);
+    border-radius: 50%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .intersection-fill {
+    position: absolute;
+    top: 0;
+    width: clamp(120px, 38vw, 160px);
+    height: clamp(120px, 38vw, 160px);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--marigold) 45%, transparent);
+  }
 
   .circle-result {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.6);
+    transform: translate(-50%, -50%) scale(0.7);
     opacity: 0;
     font-family: 'Fraunces', serif;
     font-weight: 700;
     font-style: italic;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: var(--ink);
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 0.6rem 1.2rem;
     white-space: nowrap;
-    box-shadow: var(--shadow);
     pointer-events: none;
-    transition: opacity 0.6s ease 0.55s, transform 0.6s ease 0.55s;
-  }
-  .merge-circles.merged .circle-result {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  .merge-hint {
-    margin-top: 1rem;
-    font-size: 0.85rem;
-    opacity: 0.6;
-    font-style: italic;
   }
 
   /* ---------- MENUS ---------- */
@@ -711,22 +712,23 @@
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center; display:flex;">Our Story</span>
     <h2>Two spice routes, one ambitious weekend.</h2>
-    <p>Centuries before anyone called it fusion, trade ships were already doing the work, carrying chilli, galangal and turmeric into the tiny port that would grow into Singapore, while half a world away those same fiery peppers were quietly reshaping kitchens across Mexico. Two spice routes running in parallel for hundreds of years, never quite crossing paths, until this table brings them together.</p>
-    <p>This National Day, we're letting hawker-stall heritage sit down at the same fire as taco-truck swagger, sharing one rempah base that somehow does double duty across both cuisines without ever feeling like a compromise. It's our way of celebrating a nation that has always taken whatever it was handed and turned it into something unmistakably its own.</p>
-    <p>So pull up a chair and taste it for yourself, one birria-rendang quesataco at a time.</p>
+    <p>Trade ships once carried chilli, galangal and turmeric into the tiny port that became Singapore, while half a world away those same peppers were reshaping kitchens across Mexico. Two spice routes running in parallel for centuries, never quite crossing, until this table brings them together.</p>
+    <p>This National Day, hawker-stall heritage sits down with taco-truck swagger, sharing one rempah base that does double duty across both cuisines. Pull up a chair and taste it for yourself, one birria-rendang quesataco at a time.</p>
 
-    <div class="merge-circles" id="mergeCircles" role="button" tabindex="0" aria-label="Tap to replay the fusion animation">
+    <div class="merge-circles" id="mergeCircles">
       <div class="circle circle-sg">
         <span class="circle-icon">🌶️</span>
-        Rempah &amp; rendang<br>the Nusantara way
+        Rempah &amp; rendang
       </div>
       <div class="circle circle-mx">
         <span class="circle-icon">🌮</span>
-        Birria &amp; quesatacos<br>the Jalisco way
+        Birria &amp; quesatacos
       </div>
-      <div class="circle-result">🎆 One fusion feast</div>
+      <div class="intersection-mask" id="intersectionMask">
+        <div class="intersection-fill" id="intersectionFill"></div>
+      </div>
+      <div class="circle-result" id="circleResult">One fusion feast</div>
     </div>
-    <p class="merge-hint">Tap the circles to bring them together again</p>
   </div>
 </section>
 
@@ -994,36 +996,58 @@
     });
   })();
 
-  // ---- our story: merging circles ----
+  // ---- our story: merging circles (scroll-linked, no interaction) ----
   (function () {
     var el = document.getElementById('mergeCircles');
-    if (!el) return;
+    var sg = el ? el.querySelector('.circle-sg') : null;
+    var mx = el ? el.querySelector('.circle-mx') : null;
+    var mask = document.getElementById('intersectionMask');
+    var fill = document.getElementById('intersectionFill');
+    var result = document.getElementById('circleResult');
+    if (!el || !sg || !mx || !mask || !fill || !result) return;
 
-    function playMerge() {
-      el.classList.remove('merged');
-      void el.offsetWidth;
-      requestAnimationFrame(function () {
-        el.classList.add('merged');
-      });
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      var containerWidth = el.clientWidth;
+      var d = sg.getBoundingClientRect().width;
+      if (!containerWidth || !d) return;
+
+      var gap = containerWidth - (2 * d);
+      var overlap = d * 0.32;
+      var shift = Math.max(0, (gap / 2) + (overlap / 2));
+
+      var rect = el.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var start = vh * 0.95;
+      var end = vh * 0.4;
+      var progress = (start - rect.top) / (start - end);
+      progress = Math.max(0, Math.min(1, progress));
+
+      var sgLeft = shift * progress;
+      var mxLeft = (containerWidth - d) - (shift * progress);
+
+      sg.style.left = sgLeft + 'px';
+      mx.style.left = mxLeft + 'px';
+      mask.style.left = mxLeft + 'px';
+      fill.style.left = (sgLeft - mxLeft) + 'px';
+
+      var labelProgress = Math.max(0, Math.min(1, (progress - 0.55) / 0.45));
+      result.style.opacity = labelProgress;
+      result.style.transform = 'translate(-50%, -50%) scale(' + (0.7 + 0.3 * labelProgress) + ')';
     }
 
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          playMerge();
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.5 });
-    observer.observe(el);
-
-    el.addEventListener('click', playMerge);
-    el.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        playMerge();
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
       }
-    });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
   })();
 
   // ---- behind the scenes: polaroid reveal ----
