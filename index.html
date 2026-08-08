@@ -179,6 +179,42 @@
   }
   .theme-toggle:hover { transform: scale(1.07); }
 
+  .nav-toggle {
+    display: none;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--ink);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    .nav-toggle { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      overflow-x: visible;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1.25rem 1rem;
+      gap: 0.1rem;
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 0.8rem 0.6rem; }
+  }
+
   /* ---------- HERO ---------- */
   .hero {
     position: relative;
@@ -246,44 +282,83 @@
   /* ---------- STORY ---------- */
   .story {
     background: var(--paper-alt);
+    text-align: center;
   }
-  .story-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: center;
-  }
-  @media (min-width: 800px) {
-    .story-grid { grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; }
+  .story .wrap {
+    max-width: 700px;
   }
   .story h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
   .story p { font-size: 1.05rem; margin-bottom: 1rem; }
   .story p:last-child { margin-bottom: 0; }
 
-  .story-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 1.8rem;
-    border: 1px solid var(--border);
+  .merge-circles {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    height: clamp(120px, 38vw, 160px);
+    margin: 3rem auto 0;
+    cursor: pointer;
   }
-  .story-card .flavor-row {
+  .circle {
+    position: absolute;
+    top: 0;
+    width: clamp(120px, 38vw, 160px);
+    height: clamp(120px, 38vw, 160px);
+    border-radius: 50%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.9rem;
-    padding: 0.65rem 0;
-    border-bottom: 1px dashed var(--border);
-    font-weight: 700;
-  }
-  .story-card .flavor-row:last-child { border-bottom: none; }
-  .story-card .flavor-row .icon { font-size: 1.4rem; }
-  .story-card .versus {
+    justify-content: center;
     text-align: center;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    color: var(--chili);
+    color: var(--sg-white);
     font-weight: 700;
-    margin: 0.2rem 0;
+    font-size: 0.78rem;
+    line-height: 1.3;
+    padding: 0.8rem;
+    box-shadow: var(--shadow);
+    transition: transform 1.1s cubic-bezier(.22, 1, .36, 1);
+  }
+  .circle-icon { font-size: 1.7rem; margin-bottom: 0.3rem; display: block; }
+  .circle-sg {
+    left: 0;
+    background: linear-gradient(135deg, var(--chili), var(--marigold));
+  }
+  .circle-mx {
+    right: 0;
+    background: linear-gradient(135deg, var(--sg-red), var(--cilantro));
+  }
+  .merge-circles.merged .circle-sg { transform: translateX(50px); }
+  .merge-circles.merged .circle-mx { transform: translateX(-50px); }
+
+  .circle-result {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.6rem 1.2rem;
+    white-space: nowrap;
+    box-shadow: var(--shadow);
+    pointer-events: none;
+    transition: opacity 0.6s ease 0.55s, transform 0.6s ease 0.55s;
+  }
+  .merge-circles.merged .circle-result {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .merge-hint {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    font-style: italic;
   }
 
   /* ---------- MENUS ---------- */
@@ -366,14 +441,6 @@
 
   .menus-note .veg-tag { vertical-align: middle; margin: 0 0.15em; }
 
-  .dietary-note {
-    text-align: center;
-    margin-top: 1.8rem;
-    font-size: 0.92rem;
-    opacity: 0.75;
-    font-style: italic;
-  }
-
   /* ---------- JOURNEY ---------- */
   .journey { background: var(--paper-alt); }
   .journey h2 { text-align: center; font-size: clamp(1.9rem, 4vw, 2.8rem); }
@@ -385,59 +452,56 @@
     font-size: 1.05rem;
   }
 
-  .timeline {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    max-width: 780px;
+  .polaroid-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.8rem 1.4rem;
+    max-width: 820px;
     margin: 0 auto;
   }
 
-  .timeline-item {
-    display: grid;
-    grid-template-columns: 60px 1fr;
-    gap: 1.2rem;
-    position: relative;
+  .polaroid {
+    background: var(--sg-white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.8rem 0.8rem 1.2rem;
+    box-shadow: var(--shadow);
+    width: min(200px, 42vw);
+    opacity: 0;
+    transform: translateY(24px) rotate(var(--tilt, 0deg));
+    transition: opacity 0.6s ease, transform 0.6s ease;
   }
-
-  .timeline-item::before {
-    content: "";
-    position: absolute;
-    left: 29px;
-    top: 60px;
-    bottom: -1.5rem;
-    width: 2px;
-    background: repeating-linear-gradient(to bottom, var(--chili) 0 6px, transparent 6px 12px);
+  .polaroid.in-view {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--tilt, 0deg));
   }
-  .timeline-item:last-child::before { display: none; }
+  .polaroid:hover { transform: translateY(0) rotate(0deg); }
+  .polaroid:nth-child(1) { --tilt: -4deg; }
+  .polaroid:nth-child(2) { --tilt: 3deg; }
+  .polaroid:nth-child(3) { --tilt: -2deg; }
+  .polaroid:nth-child(4) { --tilt: 4deg; }
 
-  .timeline-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--marigold), var(--chili));
+  .polaroid-photo {
+    aspect-ratio: 1 / 1;
+    background: repeating-linear-gradient(45deg, var(--paper-alt), var(--paper-alt) 10px, var(--card) 10px, var(--card) 20px);
+    border: 1px dashed var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.6rem;
-    box-shadow: var(--shadow);
-    flex-shrink: 0;
+    font-size: 2rem;
+    opacity: 0.5;
   }
 
-  .timeline-card {
-    padding-top: 0.4rem;
+  .polaroid figcaption {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+    color: var(--ink);
   }
-  .timeline-card .day-tag {
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 0.75rem;
-    color: var(--chili);
-    margin-bottom: 0.3rem;
-    display: block;
-  }
-  .timeline-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
-  .timeline-card p { margin: 0; font-size: 0.97rem; opacity: 0.85; }
 
   /* ---------- LOGISTICS ---------- */
   .logistics-grid {
@@ -615,14 +679,16 @@
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
     <div class="brand"><span class="flag">🇸🇬🌶️</span>Merdeka &amp; Masa</div>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a href="#story">Our Story</a>
       <a href="#menus">Menu</a>
       <a href="#journey">The Journey</a>
-      <a href="#logistics">Logistics</a>
+      <!-- Logistics section is currently hidden — see the LOGISTICS block below to restore. -->
+      <!-- <a href="#logistics">Logistics</a> -->
       <a href="#reviews">Reviews</a>
     </div>
     <button id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode" title="Switch theme">🌙</button>
+    <button id="navToggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false" type="button">☰</button>
   </div>
 </nav>
 
@@ -631,33 +697,36 @@
   <canvas id="fireworks" aria-hidden="true"></canvas>
   <div class="wrap">
     <h1>Merdeka &amp; <em>Masa</em>:<br>A National Day Feast</h1>
-    <p class="hero-tagline">Ah Ma's rempah meets Abuela's birria. One night, two heritages, one long table.</p>
+    <p class="hero-tagline">Where Ah Ma's rempah shakes hands with Abuela's birria, and nobody's letting go till dessert.</p>
     <div class="hero-meta">
       <span>📅 9 August 2026</span>
       <span>🕕 4pm onwards</span>
-      <span>📍 Wen Qi &amp; Zi Hang's crib (address TBA)</span>
-      <span>👩‍🍳 Chefs Elvin &amp; Vanessa</span>
+      <span>📍 Wen Qi &amp; Zi Hang's crib</span>
     </div>
   </div>
 </header>
 
 <!-- ========== OUR STORY ========== -->
 <section id="story" class="story">
-  <div class="wrap story-grid">
-    <div>
-      <span class="eyebrow">Our Story</span>
-      <h2>Two spice routes, one ambitious weekend.</h2>
-      <p>Centuries ago, ships carrying chilli, galangal and turmeric reached a tiny port that became Singapore. Half a world away, corn, cacao and chilli were building an empire of their own in Mexico. Two spice routes that never officially met, until now.</p>
-      <p>This National Day, hawker-stall heritage meets taco-truck swagger in the same pot. One shared rempah base does double duty across both cuisines. It's a small tribute to a nation built by people who took what they were given and made it their own.</p>
-      <p>Come taste it, one birria-rendang quesataco at a time.</p>
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center; display:flex;">Our Story</span>
+    <h2>Two spice routes, one ambitious weekend.</h2>
+    <p>Centuries before anyone called it fusion, trade ships were already doing the work, carrying chilli, galangal and turmeric into the tiny port that would grow into Singapore, while half a world away those same fiery peppers were quietly reshaping kitchens across Mexico. Two spice routes running in parallel for hundreds of years, never quite crossing paths, until this table brings them together.</p>
+    <p>This National Day, we're letting hawker-stall heritage sit down at the same fire as taco-truck swagger, sharing one rempah base that somehow does double duty across both cuisines without ever feeling like a compromise. It's our way of celebrating a nation that has always taken whatever it was handed and turned it into something unmistakably its own.</p>
+    <p>So pull up a chair and taste it for yourself, one birria-rendang quesataco at a time.</p>
+
+    <div class="merge-circles" id="mergeCircles" role="button" tabindex="0" aria-label="Tap to replay the fusion animation">
+      <div class="circle circle-sg">
+        <span class="circle-icon">🌶️</span>
+        Rempah &amp; rendang<br>the Nusantara way
+      </div>
+      <div class="circle circle-mx">
+        <span class="circle-icon">🌮</span>
+        Birria &amp; quesatacos<br>the Jalisco way
+      </div>
+      <div class="circle-result">🎆 One fusion feast</div>
     </div>
-    <div class="story-card">
-      <div class="flavor-row"><span class="icon">🌶️</span> Rempah &amp; rendang, the Nusantara way</div>
-      <div class="versus">meets</div>
-      <div class="flavor-row"><span class="icon">🌮</span> Birria &amp; quesatacos, the Jalisco way</div>
-      <div class="versus">equals</div>
-      <div class="flavor-row"><span class="icon">🎆</span> One fusion feast</div>
-    </div>
+    <p class="merge-hint">Tap the circles to bring them together again</p>
   </div>
 </section>
 
@@ -673,37 +742,37 @@
       <div class="dish-list">
         <div class="dish-row">
           <div class="dish-head"><h4>Nachos, Pickled Green Chilli Salsa &amp; Guac</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Tortilla chips served alongside chunky guac and a salsa built on Mum's pickled green chillies. Salt, acid and heat in one spoonful.</p>
+          <p>Tortilla chips served with chunky guacamole and salsa with pickled green chillies</p>
         </div>
         <div class="dish-row">
           <div class="dish-head"><h4>Grilled Corn, Cheese &amp; Sambal</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Charred corn, sambal butter, a roll in Parmigiano, a squeeze of calamansi. Elote, Singapore style.</p>
+          <p>Charred corn with sambal butter, Parmigiano and calamansi</p>
         </div>
         <div class="dish-row">
           <div class="dish-head"><h4>Green &amp; Gold Kiwi with Cheese</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Firm kiwi, Parmigiano curls, chilli and calamansi. Bright, unexpected, cut fresh to order.</p>
+          <p>Kiwi with Parmigiano curls, chilli and calamansi</p>
         </div>
       </div>
     </div>
 
     <div class="menu-category">
-      <h3 class="menu-category-title">Tacos &amp; Quesadillas</h3>
+      <h3 class="menu-category-title">Mains</h3>
       <div class="dish-list">
         <div class="dish-row">
           <div class="dish-head"><h4>Tempeh Birria Quesatacos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Tempeh braised in a shiitake and taucheo consommé, dipped in its own spiced oil and griddled crisp with melty Jack. Served with the broth for dunking.</p>
+          <p>Tempeh braised in shiitake and taucheo consommé, griddled with melty Jack</p>
         </div>
         <div class="dish-row">
           <div class="dish-head"><h4>Beef Rendang Quesatacos</h4></div>
-          <p>24-hour sous-vide chuck, pull-apart soft, folded through a dark rendang and finished with Parmigiano.</p>
+          <p>24-hour sous-vide beef chuck folded through rendang with Parmigiano</p>
         </div>
         <div class="dish-row">
           <div class="dish-head"><h4>Mixed Mushroom Rendang Quesatacos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>The vegetarian parallel to the beef: same paste, same kerisik, same richness, with mushrooms crisped for texture.</p>
+          <p>Mixed mushrooms in rendang with Parmigiano</p>
         </div>
         <div class="dish-row">
           <div class="dish-head"><h4>Lamb Sup Kambing Birria Quesatacos</h4></div>
-          <p>24-hour sous-vide lamb, shredded into a warm-spiced consommé, dipped in its own fat and griddled crisp with Jack.</p>
+          <p>24-hour sous-vide lamb in warm-spiced consommé, griddled with Jack</p>
         </div>
       </div>
     </div>
@@ -713,7 +782,7 @@
       <div class="dish-list">
         <div class="dish-row">
           <div class="dish-head"><h4>Kaya Churros</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Fried to order, tossed in cinnamon sugar, dunked in warm kaya. Singapore meets Mexico in one bite.</p>
+          <p>Churros with cinnamon sugar and warm kaya dip</p>
         </div>
       </div>
     </div>
@@ -723,20 +792,18 @@
       <div class="dish-list">
         <div class="dish-row">
           <div class="dish-head"><h4>Achar</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Pickled cucumber, carrot, pineapple and long bean with toasted peanuts and sesame. The most useful thing on the table.</p>
+          <p>Pickled cucumber, carrot, pineapple and long bean with peanuts and sesame</p>
         </div>
         <div class="dish-row">
           <div class="dish-head"><h4>Cucumber-Mint-Calamansi Relish</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Bright and cooling. The best all-rounder against the rich braises.</p>
+          <p>Cucumber, mint and calamansi</p>
         </div>
         <div class="dish-row">
           <div class="dish-head"><h4>Pickled Red Onions</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Sharp, clean acid, tucked into every birria taco.</p>
+          <p>Pickled red onions</p>
         </div>
       </div>
     </div>
-
-    <p class="dietary-note">Dietary notes welcome. Let us know and we'll sort you out. 🙏</p>
   </div>
 </section>
 
@@ -745,38 +812,30 @@
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center; display:flex;">Behind The Scenes</span>
     <h2>The Journey of the Feast</h2>
-    <p class="lede">Three days, one very full fridge, one moment of quiet panic. Here's the saga.</p>
+    <p class="lede">A little photo diary of how this feast came together.</p>
 
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-icon" aria-hidden="true">🌙</div>
-        <div class="timeline-card">
-          <span class="day-tag">Friday Night</span>
-          <h3>The Marinade Begins</h3>
-          <p>The beef and lamb are seasoned and sealed. Lamb gets a rub of birria spice, beef stays clean for its rendang destiny. The feast begins quietly.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-icon" aria-hidden="true">🔥</div>
-        <div class="timeline-card">
-          <span class="day-tag">Saturday</span>
-          <h3>The Big Blend</h3>
-          <p>One shared spice base splits three ways into achar, sambal and the birria foundation. Both proteins go into a slow 24-hour bath. Both rendang sauces come together. Two consommés are born.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-icon" aria-hidden="true">🎉</div>
-        <div class="timeline-card">
-          <span class="day-tag">Sunday</span>
-          <h3>The Big Reveal</h3>
-          <p>The proteins come out of their long bath, rest, then get shredded into the lamb consommé with every drop of bag juice. Everything is packed cold and driven to the party.</p>
-        </div>
-      </div>
+    <div class="polaroid-gallery">
+      <figure class="polaroid">
+        <div class="polaroid-photo" aria-hidden="true"><!-- REPLACE WITH PHOTO -->📷</div>
+        <figcaption>Ideating the dinner menu...</figcaption>
+      </figure>
+      <figure class="polaroid">
+        <div class="polaroid-photo" aria-hidden="true"><!-- REPLACE WITH PHOTO -->📷</div>
+        <figcaption>Buying the ingredients</figcaption>
+      </figure>
+      <figure class="polaroid">
+        <div class="polaroid-photo" aria-hidden="true"><!-- REPLACE WITH PHOTO -->📷</div>
+        <figcaption>Prepping for d-day</figcaption>
+      </figure>
+      <figure class="polaroid">
+        <div class="polaroid-photo" aria-hidden="true"><!-- REPLACE WITH PHOTO -->📷</div>
+        <figcaption>Clogged sink... :(</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- ========== LOGISTICS ========== -->
+<!-- ========== LOGISTICS SECTION — HIDDEN, uncomment to restore ==========
 <section id="logistics" class="logistics">
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center; display:flex;">The Details</span>
@@ -799,9 +858,10 @@
       </div>
     </div>
 
-    <div class="map-placeholder"><!-- REPLACE WITH MAP EMBED OR PHOTO -->Map / venue photo goes here</div>
+    <div class="map-placeholder">Map / venue photo goes here (replace with map embed or photo)</div>
   </div>
 </section>
+========================================================================= -->
 
 <!-- ========== REVIEWS ========== -->
 <section id="reviews" class="reviews">
@@ -815,58 +875,58 @@
         <div class="bubble featured">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
-            <p>"Efficient use of resources, exceptional integration of imported and local flavours, and a queue management system that would make our hawker centres proud. This is nation-building through braising liquid."</p>
+            <p>"Jumped out of my grave for this."</p>
           </div>
           <div class="bubble-author"><span class="avatar">🇸🇬</span> Lee Kuan Yew, Founding Prime Minister of Singapore</div>
         </div>
         <div class="bubble">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
-            <p>"I have seen this island grow from a fishing village to a global port, and now, apparently, a taco stand. Approved."</p>
+            <p>"Kokokeh Kokokeh 🐓"</p>
           </div>
-          <div class="bubble-author"><span class="avatar">⚓</span> Sir Stamford Raffles</div>
+          <div class="bubble-author"><span class="avatar">🐓</span> Steven Lim</div>
         </div>
         <div class="bubble">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
-            <p>"The consommé alone justifies a National Day Award. I would know, I've handed out a few."</p>
+            <p>"Malaysian food taste better, but this one not bad"</p>
           </div>
-          <div class="bubble-author"><span class="avatar">🎖️</span> S. R. Nathan, Former President of Singapore</div>
+          <div class="bubble-author"><span class="avatar">🇲🇾</span> Fellow Malaysian</div>
         </div>
         <div class="bubble">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
-            <p>"Multiracial, multicultural, multi-delicious. This is the Singapore story, plated."</p>
+            <p>"Thumbs up man. 👍"</p>
           </div>
-          <div class="bubble-author"><span class="avatar">🤝</span> Goh Chok Tong, Former Prime Minister of Singapore</div>
+          <div class="bubble-author"><span class="avatar">👍</span> Thumbs up man guy</div>
         </div>
         <div class="bubble featured" aria-hidden="true">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
-            <p>"Efficient use of resources, exceptional integration of imported and local flavours, and a queue management system that would make our hawker centres proud. This is nation-building through braising liquid."</p>
+            <p>"Jumped out of my grave for this."</p>
           </div>
           <div class="bubble-author"><span class="avatar">🇸🇬</span> Lee Kuan Yew, Founding Prime Minister of Singapore</div>
         </div>
         <div class="bubble" aria-hidden="true">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
-            <p>"I have seen this island grow from a fishing village to a global port, and now, apparently, a taco stand. Approved."</p>
+            <p>"Kokokeh Kokokeh 🐓"</p>
           </div>
-          <div class="bubble-author"><span class="avatar">⚓</span> Sir Stamford Raffles</div>
+          <div class="bubble-author"><span class="avatar">🐓</span> Steven Lim</div>
         </div>
         <div class="bubble" aria-hidden="true">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
-            <p>"The consommé alone justifies a National Day Award. I would know, I've handed out a few."</p>
+            <p>"Malaysian food taste better, but this one not bad"</p>
           </div>
-          <div class="bubble-author"><span class="avatar">🎖️</span> S. R. Nathan, Former President of Singapore</div>
+          <div class="bubble-author"><span class="avatar">🇲🇾</span> Fellow Malaysian</div>
         </div>
         <div class="bubble" aria-hidden="true">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
-            <p>"Multiracial, multicultural, multi-delicious. This is the Singapore story, plated."</p>
+            <p>"Thumbs up man. 👍"</p>
           </div>
-          <div class="bubble-author"><span class="avatar">🤝</span> Goh Chok Tong, Former Prime Minister of Singapore</div>
+          <div class="bubble-author"><span class="avatar">👍</span> Thumbs up man guy</div>
         </div>
       </div>
     </div>
@@ -878,7 +938,7 @@
 <!-- ========== FOOTER ========== -->
 <footer>
   <h3>See you there.</h3>
-  <p>Cooked with love (and a lot of chilli) by Chefs Elvin &amp; Vanessa</p>
+  <p>Cooked with love by chefs Elvin &amp; Vanessa</p>
   <p>Hosted at Wen Qi &amp; Zi Hang's crib</p>
   <p class="majulah">Majulah Singapura! 🎆</p>
 </footer>
@@ -913,12 +973,84 @@
     updateIcon();
   })();
 
+  // ---- mobile nav toggle ----
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (!toggle || !links) return;
+
+    function setOpen(open) {
+      links.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.textContent = open ? '✕' : '☰';
+    }
+
+    toggle.addEventListener('click', function () {
+      setOpen(!links.classList.contains('open'));
+    });
+
+    links.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () { setOpen(false); });
+    });
+  })();
+
+  // ---- our story: merging circles ----
+  (function () {
+    var el = document.getElementById('mergeCircles');
+    if (!el) return;
+
+    function playMerge() {
+      el.classList.remove('merged');
+      void el.offsetWidth;
+      requestAnimationFrame(function () {
+        el.classList.add('merged');
+      });
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          playMerge();
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(el);
+
+    el.addEventListener('click', playMerge);
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        playMerge();
+      }
+    });
+  })();
+
+  // ---- behind the scenes: polaroid reveal ----
+  (function () {
+    var gallery = document.querySelector('.polaroid-gallery');
+    if (!gallery) return;
+    var polaroids = Array.prototype.slice.call(gallery.querySelectorAll('.polaroid'));
+    if (!polaroids.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          polaroids.forEach(function (p, i) {
+            setTimeout(function () { p.classList.add('in-view'); }, i * 350);
+          });
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(gallery);
+  })();
+
   // ---- header fireworks ----
   (function () {
     var canvas = document.getElementById('fireworks');
     if (!canvas) return;
 
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var ctx = canvas.getContext('2d');
     var hero = canvas.parentElement;
     var rockets = [];
@@ -949,7 +1081,7 @@
         x: x,
         y: h,
         targetY: h * (0.18 + Math.random() * 0.35),
-        speed: 1.3 + Math.random() * 0.7,
+        speed: 2.4 + Math.random() * 1.1,
         color: colors[Math.floor(Math.random() * colors.length)],
         trail: []
       });
@@ -1037,18 +1169,11 @@
 
         draw();
       }
-      if (reduceMotion && rockets.length === 0 && particles.length === 0 && burstDone) return;
       requestAnimationFrame(tick);
     }
 
-    var burstDone = false;
-    if (reduceMotion) {
-      // still show a single gentle burst instead of nothing, then stop
-      setTimeout(function () { launchRocket(); burstDone = true; }, 500);
-    } else {
-      launchRocket();
-      scheduleLaunches();
-    }
+    launchRocket();
+    scheduleLaunches();
     tick();
   })();
 </script>
