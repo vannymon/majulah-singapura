@@ -348,18 +348,15 @@
   }
 
   .circle-result {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.7);
-    opacity: 0;
+    margin: 1.5rem 0 0;
     font-family: 'Fraunces', serif;
     font-weight: 700;
     font-style: italic;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     color: var(--ink);
-    white-space: nowrap;
-    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
   /* ---------- MENUS ---------- */
@@ -679,7 +676,7 @@
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
-    <div class="brand"><span class="flag">🇸🇬🌶️</span>Merdeka &amp; Masa</div>
+    <div class="brand">Merdeka &amp; Masa</div>
     <div class="nav-links" id="navLinks">
       <a href="#story">Our Story</a>
       <a href="#menus">Menu</a>
@@ -727,8 +724,8 @@
       <div class="intersection-mask" id="intersectionMask">
         <div class="intersection-fill" id="intersectionFill"></div>
       </div>
-      <div class="circle-result" id="circleResult">One fusion feast</div>
     </div>
+    <p class="circle-result" id="circleResult">One fusion feast</p>
   </div>
 </section>
 
@@ -1035,7 +1032,7 @@
 
       var labelProgress = Math.max(0, Math.min(1, (progress - 0.55) / 0.45));
       result.style.opacity = labelProgress;
-      result.style.transform = 'translate(-50%, -50%) scale(' + (0.7 + 0.3 * labelProgress) + ')';
+      result.style.transform = 'translateY(' + (10 - 10 * labelProgress) + 'px)';
     }
 
     function onScroll() {
