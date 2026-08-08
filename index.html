@@ -482,13 +482,14 @@
 
   .polaroid-photo {
     aspect-ratio: 1 / 1;
-    background: repeating-linear-gradient(45deg, var(--paper-alt), var(--paper-alt) 10px, var(--card) 10px, var(--card) 20px);
-    border: 1px dashed var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    opacity: 0.5;
+    overflow: hidden;
+    background: var(--paper-alt);
+  }
+  .polaroid-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .polaroid figcaption {
@@ -815,19 +816,19 @@
 
     <div class="polaroid-gallery">
       <figure class="polaroid">
-        <div class="polaroid-photo" aria-hidden="true"><!-- REPLACE WITH PHOTO -->📷</div>
+        <div class="polaroid-photo"><img src="images/polaroid-1.jpg" alt="Screenshot of the dinner menu plan being ideated" loading="lazy"></div>
         <figcaption>Ideating the dinner menu...</figcaption>
       </figure>
       <figure class="polaroid">
-        <div class="polaroid-photo" aria-hidden="true"><!-- REPLACE WITH PHOTO -->📷</div>
+        <div class="polaroid-photo"><img src="images/polaroid-2.jpg" alt="A basket of fresh vegetables and ingredients" loading="lazy"></div>
         <figcaption>Buying the ingredients</figcaption>
       </figure>
       <figure class="polaroid">
-        <div class="polaroid-photo" aria-hidden="true"><!-- REPLACE WITH PHOTO -->📷</div>
+        <div class="polaroid-photo"><img src="images/polaroid-3.jpg" alt="Sliced onions, tempeh and prep ingredients on the counter" loading="lazy"></div>
         <figcaption>Prepping for d-day</figcaption>
       </figure>
       <figure class="polaroid">
-        <div class="polaroid-photo" aria-hidden="true"><!-- REPLACE WITH PHOTO -->📷</div>
+        <div class="polaroid-photo"><img src="images/polaroid-4.jpg" alt="A very sudsy, overflowing kitchen sink" loading="lazy"></div>
         <figcaption>Clogged sink... :(</figcaption>
       </figure>
     </div>
