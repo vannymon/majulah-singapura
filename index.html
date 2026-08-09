@@ -10,8 +10,16 @@
 <meta name="description" content="A Mexican-Singaporean fusion feast for National Day: the menu, the story, and the journey behind it." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;0,900;1,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
 <style>
+  @font-face {
+    font-family: 'Rancho Camino';
+    src: url('fonts/RanchoCamino.ttf') format('truetype');
+    font-weight: 400 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
   :root {
     --sg-red: #ED2939;
     --sg-red-deep: #B71C2B;
@@ -66,7 +74,8 @@
 
   body {
     margin: 0;
-    font-family: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
     background: var(--paper);
     color: var(--ink);
     line-height: 1.6;
@@ -74,7 +83,7 @@
   }
 
   h1, h2, h3, .display {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Rancho Camino', Georgia, serif;
     font-weight: 900;
     line-height: 1.08;
     margin: 0 0 0.4em;
@@ -133,7 +142,7 @@
   }
 
   .brand {
-    font-family: 'Fraunces', serif;
+    font-family: 'Rancho Camino', serif;
     font-weight: 800;
     font-size: 1.05rem;
     white-space: nowrap;
@@ -301,15 +310,14 @@
     font-size: clamp(2.4rem, 7vw, 4.6rem);
     letter-spacing: -0.01em;
   }
-  .hero h1 em {
-    font-style: italic;
+  .title-accent {
     color: var(--sg-red);
   }
 
   .hero-tagline {
     max-width: 640px;
     margin: 1rem auto 2rem;
-    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    font-size: clamp(0.9875rem, 2vw, 1.1875rem);
     opacity: 0.85;
   }
 
@@ -338,7 +346,7 @@
     max-width: 700px;
   }
   .story h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
-  .story p { font-size: 1.05rem; margin-bottom: 1rem; }
+  .story p { font-size: 0.9875rem; margin-bottom: 1rem; }
   .story p:last-child { margin-bottom: 0; }
 
   .merge-circles {
@@ -404,7 +412,7 @@
 
   .circle-result {
     margin: 1.5rem 0 0;
-    font-family: 'Fraunces', serif;
+    font-family: 'Rancho Camino', serif;
     font-weight: 700;
     font-style: italic;
     font-size: 1.1rem;
@@ -427,7 +435,7 @@
     max-width: 620px;
     margin: 0 auto 2rem;
     opacity: 0.85;
-    font-size: 1.05rem;
+    font-size: 0.9875rem;
   }
 
   .menu-category { margin-bottom: 2.8rem; }
@@ -436,7 +444,7 @@
   .menu-category-title {
     display: block;
     text-align: center;
-    font-family: 'Fraunces', serif;
+    font-family: 'Rancho Camino', serif;
     font-weight: 700;
     font-style: italic;
     font-size: 1.1rem;
@@ -462,14 +470,14 @@
     margin-bottom: 0.35rem;
   }
   .dish-row h4 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Rancho Camino', serif;
     font-weight: 700;
     font-size: 1.1rem;
     margin: 0;
   }
   .dish-row p {
     margin: 0;
-    font-size: 0.92rem;
+    font-size: 0.8575rem;
     opacity: 0.8;
     max-width: 62ch;
   }
@@ -501,7 +509,7 @@
     max-width: 620px;
     margin: 0 auto 3rem;
     opacity: 0.85;
-    font-size: 1.05rem;
+    font-size: 0.9875rem;
   }
 
   .polaroid-gallery {
@@ -547,12 +555,12 @@
   }
 
   .polaroid figcaption {
-    font-family: 'Fraunces', serif;
+    font-family: 'Rancho Camino', serif;
     font-style: italic;
     font-weight: 600;
     text-align: center;
     margin-top: 0.8rem;
-    font-size: 0.95rem;
+    font-size: 0.8875rem;
     color: var(--sg-red-deep);
   }
 
@@ -581,8 +589,8 @@
 
   .logi-card { text-align: center; }
   .logi-card .logi-icon { font-size: 1.8rem; margin-bottom: 0.6rem; display: block; }
-  .logi-card h4 { font-family: 'Fraunces', serif; margin-bottom: 0.3rem; }
-  .logi-card p { margin: 0; opacity: 0.8; font-size: 0.95rem; }
+  .logi-card h4 { font-family: 'Rancho Camino', serif; margin-bottom: 0.3rem; }
+  .logi-card p { margin: 0; opacity: 0.8; font-size: 0.8875rem; }
 
   .map-placeholder {
     margin-top: 1.5rem;
@@ -664,7 +672,7 @@
   .bubble-body p {
     margin: 0;
     font-style: italic;
-    font-size: 0.92rem;
+    font-size: 0.8575rem;
     line-height: 1.55;
   }
 
@@ -675,7 +683,7 @@
     align-items: center;
     gap: 0.55rem;
     font-weight: 800;
-    font-size: 0.83rem;
+    font-size: 0.7675rem;
     opacity: 0.85;
   }
   .bubble-author .avatar {
@@ -695,7 +703,7 @@
     max-width: 700px;
     margin: 2.5rem auto 0;
     text-align: center;
-    font-size: 0.82rem;
+    font-size: 0.7575rem;
     opacity: 0.65;
     border-top: 1px solid var(--border);
     padding-top: 1.2rem;
@@ -708,7 +716,7 @@
     text-align: center;
     padding: 3rem 1.25rem 2.5rem;
   }
-  footer h3 { font-family: 'Fraunces', serif; font-size: 1.8rem; margin-bottom: 0.6rem; }
+  footer h3 { font-family: 'Rancho Camino', serif; font-size: 1.8rem; margin-bottom: 0.6rem; }
   footer p { opacity: 0.8; margin: 0.3rem 0; }
   footer .majulah {
     margin-top: 1.5rem;
@@ -722,7 +730,7 @@
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
-    <div class="brand">Merdeka &amp; Masa</div>
+    <div class="brand"><span class="title-accent">Merdeka</span> &amp; Masa</div>
     <div class="nav-links" id="navLinks">
       <a href="#story">Our Story</a>
       <a href="#menus">Menu</a>
@@ -751,8 +759,8 @@
 <header class="hero">
   <canvas id="fireworks" aria-hidden="true"></canvas>
   <div class="wrap">
-    <h1>Merdeka &amp; <em>Masa</em>:<br>A National Day Feast</h1>
-    <p class="hero-tagline">Where Ah Ma's rempah shakes hands with Abuela's birria, and nobody's letting go till dessert.</p>
+    <h1><span class="title-accent">Merdeka</span> &amp; Masa</h1>
+    <p class="hero-tagline">A feast where Ah Ma's rempah shakes hands with Abuela's birria, and nobody's letting go till dessert.</p>
     <div class="hero-meta">
       <span>📅 9 August 2026</span>
       <span>🕕 4pm onwards</span>
@@ -1104,9 +1112,12 @@
       });
     }
 
-    // Browsers block audible autoplay without a user gesture, so start
-    // music on the first tap/click/keypress anywhere on the page —
-    // feels like autoplay without violating that policy.
+    // Try to autoplay immediately on load. Most browsers block audible
+    // autoplay without a prior user gesture, so this silently fails in
+    // that case and the listeners below start it on first interaction
+    // instead — the closest thing to true autoplay the web allows.
+    startPlayback();
+
     function firstInteraction() {
       document.removeEventListener('click', firstInteraction);
       document.removeEventListener('touchstart', firstInteraction);
