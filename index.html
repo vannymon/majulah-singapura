@@ -211,6 +211,24 @@
     transform: translateX(28px);
   }
 
+  .music-toggle {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+  }
+  .music-toggle:hover { transform: scale(1.07); }
+
   .nav-toggle {
     display: none;
     flex-shrink: 0;
@@ -416,21 +434,14 @@
   .menu-category:last-of-type { margin-bottom: 0; }
 
   .menu-category-title {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
+    display: block;
+    text-align: center;
     font-family: 'Fraunces', serif;
     font-weight: 700;
     font-style: italic;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     color: var(--chili);
     margin-bottom: 1.3rem;
-  }
-  .menu-category-title::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--border);
   }
 
   .dish-list {
@@ -603,22 +614,18 @@
     -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
     mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
     padding: 0.5rem 0 1rem;
+    touch-action: pan-y;
+    cursor: grab;
+  }
+  .reviews-marquee.dragging {
+    cursor: grabbing;
   }
 
   .marquee-track {
     display: flex;
     gap: 1.4rem;
     width: max-content;
-    animation: marqueeMove 34s linear infinite;
-  }
-  .reviews-marquee:hover .marquee-track,
-  .reviews-marquee:focus-within .marquee-track {
-    animation-play-state: paused;
-  }
-
-  @keyframes marqueeMove {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    will-change: transform;
   }
 
   .bubble {
@@ -732,10 +739,13 @@
           <span class="theme-toggle-knob"></span>
         </span>
       </button>
+      <button id="musicToggle" class="music-toggle" aria-label="Play background music" aria-pressed="false" title="Toggle music" type="button">🔇</button>
       <button id="navToggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false" type="button">☰</button>
     </div>
   </div>
 </nav>
+
+<audio id="bgMusic" src="audio/ho-seh-lah.mp3" loop preload="none"></audio>
 
 <!-- ========== HERO ========== -->
 <header class="hero">
@@ -787,16 +797,16 @@
       <h3 class="menu-category-title">Starters &amp; Grazing</h3>
       <div class="dish-list">
         <div class="dish-row">
-          <div class="dish-head"><h4>Nachos, Pickled Green Chilli Salsa &amp; Guac</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Tortilla chips served with chunky guacamole and salsa with pickled green chillies</p>
+          <div class="dish-head"><h4>Nachos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Tortilla chips served with chunky guacamole and salsa with Elvin's mom's pickled green chillies</p>
         </div>
         <div class="dish-row">
-          <div class="dish-head"><h4>Grilled Corn, Cheese &amp; Sambal</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <div class="dish-head"><h4>Sambal Elote</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Charred corn with sambal butter, Parmigiano and calamansi</p>
         </div>
         <div class="dish-row">
-          <div class="dish-head"><h4>Green &amp; Gold Kiwi with Cheese</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Kiwi with Parmigiano curls, chilli and calamansi</p>
+          <div class="dish-head"><h4>Funny Salad</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Kiwi with cheese</p>
         </div>
       </div>
     </div>
@@ -805,20 +815,20 @@
       <h3 class="menu-category-title">Mains</h3>
       <div class="dish-list">
         <div class="dish-row">
+          <div class="dish-head"><h4>Mixed Mushroom Rendang Quesatacos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Mixed mushrooms (Oyster, King Oyster, Shitake and Cremini) in rendang with Parmigiano</p>
+        </div>
+        <div class="dish-row">
           <div class="dish-head"><h4>Tempeh Birria Quesatacos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Tempeh braised in shiitake and taucheo consommé, griddled with melty Jack</p>
+          <p>Tempeh braised in kombu and aged miso consommé, griddled with melty Jack</p>
         </div>
         <div class="dish-row">
           <div class="dish-head"><h4>Beef Rendang Quesatacos</h4></div>
-          <p>24-hour sous-vide beef chuck folded through rendang with Parmigiano</p>
-        </div>
-        <div class="dish-row">
-          <div class="dish-head"><h4>Mixed Mushroom Rendang Quesatacos</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Mixed mushrooms in rendang with Parmigiano</p>
+          <p>24-hour beef chuck folded through rendang with Parmigiano</p>
         </div>
         <div class="dish-row">
           <div class="dish-head"><h4>Lamb Sup Kambing Birria Quesatacos</h4></div>
-          <p>24-hour sous-vide lamb in warm-spiced consommé, griddled with Jack</p>
+          <p>24-hour lamb in warm-spiced consommé, griddled with melty Jack</p>
         </div>
       </div>
     </div>
@@ -827,8 +837,8 @@
       <h3 class="menu-category-title">Dessert</h3>
       <div class="dish-list">
         <div class="dish-row">
-          <div class="dish-head"><h4>Kaya Churros</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Churros with cinnamon sugar and warm kaya dip</p>
+          <div class="dish-head"><h4>Hainan Churros</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Churros with cinnamon sugar and warm kopi-infused kaya dip</p>
         </div>
       </div>
     </div>
@@ -837,16 +847,16 @@
       <h3 class="menu-category-title">Toppings, for everything</h3>
       <div class="dish-list">
         <div class="dish-row">
-          <div class="dish-head"><h4>Achar</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Pickled cucumber, carrot, pineapple and long bean with peanuts and sesame</p>
+          <div class="dish-head"><h4>Ahma's Grandson's Achar</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Pickled cucumber, carrot, red onion and pineapple with peanuts</p>
         </div>
         <div class="dish-row">
-          <div class="dish-head"><h4>Cucumber-Mint-Calamansi Relish</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <div class="dish-head"><h4>Cucumber Mint Calamansi Relish</h4><span class="veg-tag">🌱 Vegetarian</span></div>
           <p>Cucumber, mint and calamansi</p>
         </div>
         <div class="dish-row">
-          <div class="dish-head"><h4>Pickled Red Onions</h4><span class="veg-tag">🌱 Vegetarian</span></div>
-          <p>Pickled red onions</p>
+          <div class="dish-head"><h4>Zichar Green Chilli</h4><span class="veg-tag">🌱 Vegetarian</span></div>
+          <p>Mom's homemade pickled green chillies</p>
         </div>
       </div>
     </div>
@@ -935,6 +945,13 @@
         <div class="bubble">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
+            <p>"Eat it up, eat it, eat it up"</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🎤</span> Kim Chaewon</div>
+        </div>
+        <div class="bubble">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
             <p>"Malaysian food taste better, but this one not bad"</p>
           </div>
           <div class="bubble-author"><span class="avatar">🇲🇾</span> Fellow Malaysian</div>
@@ -945,6 +962,13 @@
             <p>"Thumbs up man. 👍"</p>
           </div>
           <div class="bubble-author"><span class="avatar">👍</span> Thumbs up man guy</div>
+        </div>
+        <div class="bubble">
+          <div class="bubble-body">
+            <div class="stars">★☆☆☆☆</div>
+            <p>"My monkey cooks better"</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🐵</span> Dora the Explorer</div>
         </div>
         <div class="bubble featured" aria-hidden="true">
           <div class="bubble-body">
@@ -963,6 +987,13 @@
         <div class="bubble" aria-hidden="true">
           <div class="bubble-body">
             <div class="stars">★★★★★</div>
+            <p>"Eat it up, eat it, eat it up"</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🎤</span> Kim Chaewon</div>
+        </div>
+        <div class="bubble" aria-hidden="true">
+          <div class="bubble-body">
+            <div class="stars">★★★★★</div>
             <p>"Malaysian food taste better, but this one not bad"</p>
           </div>
           <div class="bubble-author"><span class="avatar">🇲🇾</span> Fellow Malaysian</div>
@@ -973,6 +1004,13 @@
             <p>"Thumbs up man. 👍"</p>
           </div>
           <div class="bubble-author"><span class="avatar">👍</span> Thumbs up man guy</div>
+        </div>
+        <div class="bubble" aria-hidden="true">
+          <div class="bubble-body">
+            <div class="stars">★☆☆☆☆</div>
+            <p>"My monkey cooks better"</p>
+          </div>
+          <div class="bubble-author"><span class="avatar">🐵</span> Dora the Explorer</div>
         </div>
       </div>
     </div>
@@ -1038,6 +1076,141 @@
     links.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () { setOpen(false); });
     });
+  })();
+
+  // ---- background music ----
+  (function () {
+    var audio = document.getElementById('bgMusic');
+    var btn = document.getElementById('musicToggle');
+    if (!audio || !btn) return;
+
+    audio.volume = 0.5;
+    var playing = false;
+    var userMuted = false;
+
+    function updateIcon() {
+      btn.textContent = playing ? '🔊' : '🔇';
+      btn.setAttribute('aria-pressed', String(playing));
+      btn.setAttribute('aria-label', playing ? 'Mute background music' : 'Play background music');
+    }
+
+    function startPlayback() {
+      audio.play().then(function () {
+        playing = true;
+        updateIcon();
+      }).catch(function () {
+        playing = false;
+        updateIcon();
+      });
+    }
+
+    // Browsers block audible autoplay without a user gesture, so start
+    // music on the first tap/click/keypress anywhere on the page —
+    // feels like autoplay without violating that policy.
+    function firstInteraction() {
+      document.removeEventListener('click', firstInteraction);
+      document.removeEventListener('touchstart', firstInteraction);
+      document.removeEventListener('keydown', firstInteraction);
+      if (!userMuted && !playing) startPlayback();
+    }
+    document.addEventListener('click', firstInteraction);
+    document.addEventListener('touchstart', firstInteraction);
+    document.addEventListener('keydown', firstInteraction);
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (playing) {
+        audio.pause();
+        playing = false;
+        userMuted = true;
+        updateIcon();
+      } else {
+        userMuted = false;
+        startPlayback();
+      }
+    });
+
+    updateIcon();
+  })();
+
+  // ---- reviews: draggable auto-scrolling marquee ----
+  (function () {
+    var wrap = document.querySelector('.reviews-marquee');
+    var track = document.querySelector('.marquee-track');
+    if (!wrap || !track) return;
+
+    var offset = 0;
+    var halfWidth = 0;
+    var speed = 0;
+    var dragging = false;
+    var dragStartX = 0;
+    var dragStartOffset = 0;
+    var lastTime = null;
+
+    function measure() {
+      halfWidth = track.scrollWidth / 2;
+      speed = halfWidth / 34000;
+    }
+    measure();
+    window.addEventListener('resize', measure);
+
+    function normalizeOffset() {
+      if (halfWidth <= 0) return;
+      while (offset <= -halfWidth) offset += halfWidth;
+      while (offset > 0) offset -= halfWidth;
+    }
+
+    function apply() {
+      track.style.transform = 'translateX(' + offset + 'px)';
+    }
+
+    function tick(time) {
+      if (lastTime === null) lastTime = time;
+      var dt = time - lastTime;
+      lastTime = time;
+      if (!dragging) {
+        offset -= speed * dt;
+        normalizeOffset();
+        apply();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function getX(e) {
+      return e.touches ? e.touches[0].clientX : e.clientX;
+    }
+
+    function pointerDown(e) {
+      dragging = true;
+      wrap.classList.add('dragging');
+      dragStartX = getX(e);
+      dragStartOffset = offset;
+    }
+
+    function pointerMove(e) {
+      if (!dragging) return;
+      offset = dragStartOffset + (getX(e) - dragStartX);
+      normalizeOffset();
+      apply();
+    }
+
+    function pointerUp() {
+      dragging = false;
+      wrap.classList.remove('dragging');
+    }
+
+    wrap.addEventListener('mousedown', pointerDown);
+    window.addEventListener('mousemove', pointerMove);
+    window.addEventListener('mouseup', pointerUp);
+
+    wrap.addEventListener('touchstart', pointerDown, { passive: true });
+    wrap.addEventListener('touchmove', pointerMove, { passive: true });
+    wrap.addEventListener('touchend', pointerUp);
+    wrap.addEventListener('touchcancel', pointerUp);
+
+    wrap.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+    requestAnimationFrame(tick);
   })();
 
   // ---- our story: merging circles (scroll-linked, no interaction) ----
